@@ -5,13 +5,11 @@ import Post from "@/models/InteriorPost";
 export const DELETE = async (
   request: Request,
   { params }: { params: { id: string } }
-) => {
+): Promise<NextResponse> => {
   try {
     await connect();
 
     const { id } = params;
-
-    console.log(id)
 
     await Post.findByIdAndDelete(id);
 

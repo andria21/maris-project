@@ -1,5 +1,5 @@
 import React from "react";
-import HomeImage from "../../public/images/homescreen.jpg";
+// import HomeImage from "../../public/images/homescreen.jpg";
 import Image from "next/image";
 
 export default function Hero() {

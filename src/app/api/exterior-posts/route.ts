@@ -7,6 +7,7 @@ export const GET = async () => {
     await connect();
 
     const exteriorPosts = await Post.find();
+    console.log(exteriorPosts); 
 
     return new NextResponse(JSON.stringify(exteriorPosts), { status: 200 });
   } catch (err) {
