@@ -6,10 +6,7 @@ interface routeParams {
   params: { id: string };
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: routeParams
-): Promise<NextResponse> {
+export async function DELETE(request: Request, { params }: routeParams) {
   try {
     await connect();
 
