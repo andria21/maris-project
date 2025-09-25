@@ -17,9 +17,11 @@ export default function Hero() {
         className="
   absolute left-1/2 -translate-x-1/2
   text-4xl sm:text-5xl md:text-6xl lg:text-7xl
-  bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-36
+  bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-26
   font-medium
   text-center
+  text-white
+  shadow-lg
 "
       >
         design & architecture
