@@ -15,20 +15,20 @@ export const GET = async () => {
   }
 };
 
-export const POST = async (request: Request) => {
-  try {
-    await connect();
+// export const POST = async (request: Request) => {
+//   try {
+//     await connect();
 
-    const body = await request.json();
+//     const body = await request.json();
 
-    const newPost = new Post(body);
+//     const newPost = new Post(body);
 
-    console.log(body);
+//     console.log(body);
 
-    await newPost.save();
+//     await newPost.save();
 
-    return new NextResponse("Post has been created", { status: 201 });
-  } catch (err) {
-    return new NextResponse("Database Error" + err, { status: 500 });
-  }
-};
+//     return new NextResponse("Post has been created", { status: 201 });
+//   } catch (err) {
+//     return new NextResponse("Database Error" + err, { status: 500 });
+//   }
+// };

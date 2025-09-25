@@ -36,7 +36,7 @@ export default function Navigation() {
         aria-label="Home"
         className="text-[16px] font-bold absolute left-1/2 -translate-x-1/2 cursor-pointer text-white -tracking-normal"
       >
-        <h1>mari</h1>
+        <h1>lavenrose</h1>
       </Link>
 
       <span className="md:hidden">

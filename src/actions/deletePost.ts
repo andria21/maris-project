@@ -1,26 +1,20 @@
 "use server";
 
-import { headers } from "next/headers";
+import connect from "@/utils/db";
+import ExteriorPost from "@/models/ExteriorPosts";
+import InteriorPost from "@/models/InteriorPost";
 
-export const deleteExteriorPost = async (id : string) => {
-  await deletePostUtil(id, "/api/exterior-posts");
+export const deleteExteriorPost = async (id: string) => {
+  await deletePostUtil(id, "/api/exterior-posts", false);
 };
-export const deleteInteriorPost = async (id : string) => {
-  await deletePostUtil(id, "/api/interior-posts");
+export const deleteInteriorPost = async (id: string) => {
+  await deletePostUtil(id, "/api/interior-posts", true);
 };
 
-async function deletePostUtil(id: string, url: string) {
-  const host = (await headers()).get("host");
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const baseUrl = `${protocol}://${host}`;
+async function deletePostUtil(id: string, url: string, page: boolean) {
+  await connect();
 
-  console.log(id);
+  const pagePost = page ? InteriorPost : ExteriorPost;
 
-  await fetch(`${baseUrl}${url}/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(id),
-  });
+  await pagePost.findByIdAndDelete(id);
 }
