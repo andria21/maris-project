@@ -2,14 +2,18 @@ import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/InteriorPost";
 
-export async function DELETE (
+interface routeParams {
+  params: { id: string };
+}
+
+export async function DELETE(
   request: Request,
-  context: { params: Record<string, string>}
+  { params }: routeParams
 ): Promise<NextResponse> {
   try {
     await connect();
 
-    const { id } = context.params;
+    const { id } = params;
 
     await Post.findByIdAndDelete(id);
 
@@ -17,4 +21,4 @@ export async function DELETE (
   } catch (err) {
     return new NextResponse("Database Error" + err, { status: 500 });
   }
-};
+}
