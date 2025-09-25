@@ -95,9 +95,9 @@ export default function Exteriors() {
         onSubmit={handleSubmit}
         className="flex flex-col w-full items-center justify-center gap-2 px-150 pb-50"
       >
-        <Input name="title" type="text" placeholder="Title" />
-        <Input name="desc" type="text" placeholder="Description" />
-        <Input name="img" type="text" placeholder="Image" />
+        <Input name="title" type="text" placeholder="Title" required />
+        <Input name="desc" type="text" placeholder="Description" required />
+        <Input name="img" type="text" placeholder="Image" required />
         <Button variant={"default"} type="submit" className="cursor-pointer">
           Submit
         </Button>

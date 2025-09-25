@@ -4,7 +4,7 @@ import Post from "@/models/InteriorPost";
 
 export async function DELETE (
   request: Request,
-  context: { params: { id: string } }
+  context: { params: Record<string, string>}
 ): Promise<NextResponse> {
   try {
     await connect();

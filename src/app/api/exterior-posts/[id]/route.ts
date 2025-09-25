@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/ExteriorPosts";
 
-export async function DELETE (
+export async function DELETE(
   request: Request,
-  context: { params: { id: string } }
+  context: { params: Record<string, string> }
 ): Promise<NextResponse> {
   try {
     await connect();
@@ -17,4 +17,4 @@ export async function DELETE (
   } catch (err) {
     return new NextResponse("Database Error" + err, { status: 500 });
   }
-};
+}
