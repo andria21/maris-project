@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/InteriorPost";
 
-export const DELETE = async (
+export async function DELETE (
   request: Request,
-  { params }: { params: Promise<{ id: string }>}
-) => {
+  context: { params: { id: string } }
+): Promise<NextResponse> {
   try {
     await connect();
 
-    const { id } = await params;
+    const { id } = context.params;
 
     await Post.findByIdAndDelete(id);
 
