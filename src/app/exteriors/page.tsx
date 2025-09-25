@@ -7,6 +7,9 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
+import { createExteriorPost } from "@/actions/createPost";
+import { deleteExteriorPost } from "@/actions/deletePost";
 
 type InteriorPost = {
   _id: string;
@@ -24,43 +27,29 @@ export default function Exteriors() {
     fetcher
   );
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const title = (form.elements.namedItem("title") as HTMLInputElement)?.value;
-    const desc = (form.elements.namedItem("desc") as HTMLInputElement)?.value;
-    const img = (form.elements.namedItem("img") as HTMLInputElement)?.value;
+  const { pending } = useFormStatus();
 
-    console.log(title, desc, img);
-
+  async function handleAction(formData: FormData) {
     try {
-      await fetch("/api/exterior-posts", {
-        method: "POST",
-        body: JSON.stringify({
-          title,
-          desc,
-          img,
-        }),
-      });
+      await createExteriorPost(formData);
       mutate();
-      (form as HTMLFormElement).reset();
       toast.success("Post created successfully");
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
     }
-  };
+  }
 
-  const handleDelete = async (id: string) => {
+  async function handleDeleteAction(id: string) {
     try {
-      await fetch(`/api/exterior-posts/${id}`, {
-        method: "DELETE",
-      });
+      await deleteExteriorPost(id);
       mutate();
       toast.success("Post deleted successfully");
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
     }
-  };
+  }
 
   if (isLoading)
     return (
@@ -86,20 +75,25 @@ export default function Exteriors() {
               title={item.title}
               description={item.desc}
               pages={{ interiors: "interiors", exteriors: "" }}
-              deleteHandler={() => handleDelete(item._id)}
+              deleteHandler={() => handleDeleteAction(item._id)}
             />
           ))}
         </div>
       </div>
       <form
-        onSubmit={handleSubmit}
+        action={handleAction}
         className="flex flex-col w-full items-center justify-center gap-2 px-150 pb-50"
       >
         <Input name="title" type="text" placeholder="Title" required />
         <Input name="desc" type="text" placeholder="Description" required />
         <Input name="img" type="text" placeholder="Image" required />
-        <Button variant={"default"} type="submit" className="cursor-pointer">
-          Submit
+        <Button
+          variant={"default"}
+          type="submit"
+          className="cursor-pointer"
+          disabled={pending}
+        >
+          {pending ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </div>
