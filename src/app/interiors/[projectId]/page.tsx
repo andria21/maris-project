@@ -8,8 +8,8 @@ import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
 import { createInteriorProjectPost } from "@/actions/createProjectPost";
-import { useSearchParams } from "next/navigation";
 import { deleteInteriorProjectPost } from "@/actions/deleteProjectPost";
+import SkeletonUI from "@/components/skeleton";
 
 interface ProjectDetailsProps {
   params: Promise<{ projectId: string }>;
@@ -62,13 +62,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     }
   }
 
-  if (isLoading)
-    return (
-      <div className="h-screen w-full flex items-center justify-center p-4 gap-2">
-        <Spinner />
-        <p>Loading, please wait...</p>
-      </div>
-    );
 
   if (error) return <p>There&apos; been an error</p>;
 
@@ -77,24 +70,28 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
       <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
         {projectName}
       </h1>
-      <div className="flex flex-col items-center justify-center w-full">
-        <div className="grid grid-cols-1 md:gap-y-32 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
-          {data
-            ?.filter((item: InteriorProject) => item.projectId === projectId)
-            .map((item: InteriorProject) => (
-              <ProjectCard
-                key={item._id}
-                image={item.img}
-                title={item.title ?? ""}
-                description={item.desc ?? ""}
-                pages={{ interiors: "interiors", exteriors: "" }}
-                deleteHandler={() => handleDeleteAction(item._id)}
-                projectId={`/interiors/${item._id}`}
-                isLink={false}
-              />
-            ))}
+      {isLoading ? (
+        <SkeletonUI />
+      ) : (
+        <div className="flex flex-col items-center justify-center w-full">
+          <div className="grid grid-cols-1 md:gap-y-32 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
+            {data
+              ?.filter((item: InteriorProject) => item.projectId === projectId)
+              .map((item: InteriorProject) => (
+                <ProjectCard
+                  key={item._id}
+                  image={item.img}
+                  title={item.title ?? ""}
+                  description={item.desc ?? ""}
+                  pages={{ interiors: "interiors", exteriors: "" }}
+                  deleteHandler={() => handleDeleteAction(item._id)}
+                  projectId={`/interiors/${item._id}`}
+                  isLink={false}
+                />
+              ))}
+          </div>
         </div>
-      </div>
+      )}
       <form
         action={handleAction}
         className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
@@ -131,7 +128,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
           >
             Submit
           </Button>
-          {isLoading && <Spinner />}
         </div>
       </form>
     </div>
