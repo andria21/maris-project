@@ -11,7 +11,7 @@ export default function Hero() {
         }
         fill
         alt="Hero Image"
-        style={{ objectFit: "cover" }}
+        className="object-cover"
       />
       <h1
         className={`
@@ -23,7 +23,7 @@ export default function Hero() {
   text-[rgb(222,222,222)]
   shadow-lg
   font-montserrat
-  text-nowrap
+  md:text-nowrap
 `}
       >
         design & architecture

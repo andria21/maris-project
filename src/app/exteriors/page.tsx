@@ -7,7 +7,7 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
-import { useFormStatus } from "react-dom";
+// import { useFormStatus } from "react-dom";
 import { createExteriorPost } from "@/actions/createPost";
 import { deleteExteriorPost } from "@/actions/deletePost";
 
@@ -27,7 +27,7 @@ export default function Exteriors() {
     fetcher
   );
 
-  const { pending } = useFormStatus();
+  // const { pending } = useFormStatus();
 
   async function handleAction(formData: FormData) {
     try {
