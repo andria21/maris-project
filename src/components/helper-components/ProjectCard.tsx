@@ -40,23 +40,24 @@ function ProjectCard({
           <X className="h-6 w-6" />
         </Button>
       )}
-      <div className="relative w-full h-130 group">
+      <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
         <Image
           src={image}
-          fill
           alt="Image 1"
+          fill
           className="object-cover transition-opacity duration-1000 group-hover:opacity-50 cursor-pointer"
         />
       </div>
+
       <h1
         className={cn(
-          "mt-6 pl-12 font-medium text-2xl ",
-          pages?.interiors && "text-4xl"
+          "mt-6 md:pl-12 pl-6 font-medium text-2xl ",
+          pages?.interiors && "md:text-4xl text-2xl font-montserrat font-[600]"
         )}
       >
         {title}
       </h1>
-      <p className="text-gray-400 mt-1 pl-12 text-md font-light">
+      <p className="text-gray-400 mt-1 md:pl-12 pl-6 text-md font-light font-montserrat">
         {description}
       </p>
     </div>

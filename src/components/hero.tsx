@@ -14,15 +14,17 @@ export default function Hero() {
         style={{ objectFit: "cover" }}
       />
       <h1
-        className="
+        className={`
   absolute left-1/2 -translate-x-1/2
-  text-4xl sm:text-5xl md:text-6xl lg:text-7xl
+  text-4xl sm:text-5xl md:text-6xl lg:text-6xl
   bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-26
-  font-medium
+  font-[600]
   text-center
-  text-white
+  text-[rgb(222,222,222)]
   shadow-lg
-"
+  font-montserrat
+  text-nowrap
+`}
       >
         design & architecture
       </h1>

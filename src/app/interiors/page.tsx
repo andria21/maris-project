@@ -60,11 +60,11 @@ export default function Interiors() {
 
   return (
     <div className="h-screen w-full flex flex-col justify-between">
-      <h1 className="pt-40 flex justify-center text-5xl sm:text-7xl font-bold">
+      <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
         INTERIORS
       </h1>
       <div className="flex flex-col items-center justify-center w-full">
-        <div className="grid grid-cols-2 gap-y-52 w-full pt-10 pb-20">
+        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-52 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
           {data?.map((item: InteriorPost) => (
             <ProjectCard
               key={item._id}
