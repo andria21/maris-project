@@ -5,6 +5,7 @@ import React from "react";
 
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 type Pages = {
   interiors: string;
@@ -18,6 +19,8 @@ type ProjectCardProps = {
   pages?: Pages;
   deleteHandler?: (id: string) => void;
   id?: string;
+  projectId?: string | undefined;
+  isLink?: boolean;
 };
 
 export default ProjectCard;
@@ -28,6 +31,8 @@ function ProjectCard({
   pages,
   deleteHandler,
   id,
+  projectId,
+  isLink,
 }: ProjectCardProps) {
   return (
     <div className="w-full relative">
@@ -40,14 +45,28 @@ function ProjectCard({
           <X className="h-6 w-6" />
         </Button>
       )}
-      <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
-        <Image
-          src={image}
-          alt="Image 1"
-          fill
-          className="object-cover transition-opacity duration-1000 group-hover:opacity-50 cursor-pointer"
-        />
-      </div>
+
+      {isLink ? (
+        <Link href={projectId ?? ""}>
+          <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
+            <Image
+              src={image}
+              alt="Image 1"
+              fill
+              className="object-cover transition-opacity duration-1000 group-hover:opacity-50 cursor-pointer"
+            />
+          </div>
+        </Link>
+      ) : (
+        <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
+          <Image
+            src={image}
+            alt="Image 1"
+            fill
+            className="object-cover transition-opacity duration-1000 group-hover:opacity-50 cursor-pointer"
+          />
+        </div>
+      )}
 
       <h1
         className={cn(

@@ -7,28 +7,42 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
-import { createInteriorPost } from "@/actions/createPost";
-import { deleteInteriorPost } from "@/actions/deletePost";
+import { createInteriorProjectPost } from "@/actions/createProjectPost";
+import { useSearchParams } from "next/navigation";
+import { deleteInteriorProjectPost } from "@/actions/deleteProjectPost";
 
-type InteriorPost = {
+interface ProjectDetailsProps {
+  params: Promise<{ projectId: string }>;
+}
+
+type InteriorProject = {
   _id: string;
+  projectId: string;
   img: string;
-  title: string;
-  desc: string;
+  title?: string;
+  desc?: string;
+  postTitle?: string;
 };
 
-export default function Interiors() {
+const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
+  const { projectId } = React.use(params);
+
   const fetcher = (...args: [RequestInfo, RequestInit?]) =>
     fetch(...args).then((res) => res.json());
 
   const { data, mutate, error, isLoading } = useSWR(
-    `/api/interior-posts`,
+    `/api/interior-projects`,
     fetcher
   );
 
+  // console.log(!isLoading && data);
+  const projectName = data?.find(
+    (project: InteriorProject) => project.projectId === projectId
+  )?.postTitle;
+
   async function handleAction(formData: FormData) {
     try {
-      await createInteriorPost(formData);
+      await createInteriorProjectPost(formData, projectId);
       mutate();
       toast.success("Post created successfully");
     } catch (err) {
@@ -39,7 +53,7 @@ export default function Interiors() {
 
   async function handleDeleteAction(id: string) {
     try {
-      await deleteInteriorPost(id);
+      await deleteInteriorProjectPost(id);
       mutate();
       toast.success("Post deleted successfully");
     } catch (err) {
@@ -60,43 +74,43 @@ export default function Interiors() {
 
   return (
     <div className="h-screen w-full flex flex-col justify-between">
-      <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
-        INTERIORS
+      <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
+        {projectName}
       </h1>
       <div className="flex flex-col items-center justify-center w-full">
-        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-52 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
-          {data?.map((item: InteriorPost) => (
-            <ProjectCard
-              key={item._id}
-              image={item.img}
-              title={item.title}
-              description={item.desc}
-              pages={{ interiors: "interiors", exteriors: "" }}
-              deleteHandler={() => handleDeleteAction(item._id)}
-              projectId={`/interiors/${item._id}`}
-              isLink
-            />
-          ))}
+        <div className="grid grid-cols-1 md:gap-y-32 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
+          {data
+            ?.filter((item: InteriorProject) => item.projectId === projectId)
+            .map((item: InteriorProject) => (
+              <ProjectCard
+                key={item._id}
+                image={item.img}
+                title={item.title ?? ""}
+                description={item.desc ?? ""}
+                pages={{ interiors: "interiors", exteriors: "" }}
+                deleteHandler={() => handleDeleteAction(item._id)}
+                projectId={`/interiors/${item._id}`}
+                isLink={false}
+              />
+            ))}
         </div>
       </div>
       <form
         action={handleAction}
         className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
-             mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md"
+                   mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
           <Input
             name="title"
             type="text"
             placeholder="Title"
-            required
             className="w-full"
           />
           <Input
             name="desc"
             type="text"
             placeholder="Description"
-            required
             className="w-full"
           />
         </div>
@@ -122,4 +136,6 @@ export default function Interiors() {
       </form>
     </div>
   );
-}
+};
+
+export default ProjectDetails;
