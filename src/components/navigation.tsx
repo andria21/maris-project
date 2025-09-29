@@ -5,10 +5,46 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react"; // hamburger & close icons
 import { ModeToggle } from "./mode-toggle";
+import { useUser } from "@/hooks/useUser";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { signOut } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false); // mobile menu toggle
+
+
+  const { user, isAuthenticated } = useUser();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false }); // don’t auto redirect
+    // router.push("/"); // manually navigate
+  };
+
+  function CustomDp() {
+    if (isAuthenticated)
+      return (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild className="cursor-pointer">
+            <Button variant="outline">{user?.name || user?.email}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer"
+            >
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -55,9 +91,12 @@ export default function Navigation() {
             Contact Us
           </Button>
         </div>
-        <span className="hidden md:block">
+        <span className="hidden md:block mr-2">
           <ModeToggle />
         </span>
+        <div className={cn("hidden md:block", isAuthenticated && "mr-2")}>
+          <CustomDp />
+        </div>
         {/* Mobile Hamburger */}
         <div className="md:hidden text-white" onClick={() => setOpen(!open)}>
           {open ? <X size={24} /> : <Menu size={24} />}
@@ -102,6 +141,7 @@ export default function Navigation() {
           >
             Contact
           </Button>
+          <CustomDp />
         </div>
       )}
     </nav>

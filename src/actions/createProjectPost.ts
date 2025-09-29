@@ -1,14 +1,14 @@
 "use server";
 
 import connect from "@/utils/db";
-import ExteriorPost from "@/models/ExteriorPosts";
 import InteriorProjects from "@/models/InteriorProjects";
+import ExteriorProjects from "@/models/ExteriorProjects";
 
 export const createExteriorProjectPost = async (
   formData: FormData,
   projectId: string
 ) => {
-  await createPostUtil(formData, "/api/exterior-posts", false, projectId);
+  await createPostUtil(formData, "/api/exterior-projects", false, projectId);
 };
 export const createInteriorProjectPost = async (
   formData: FormData,
@@ -32,7 +32,7 @@ async function createPostUtil(
 
   await connect();
 
-  const pagePost = page ? InteriorProjects : ExteriorPost;
+  const pagePost = page ? InteriorProjects : ExteriorProjects;
 
   const newPost = new pagePost(rawFormData);
 

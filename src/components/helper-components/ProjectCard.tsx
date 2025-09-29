@@ -6,6 +6,7 @@ import React from "react";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
 
 type Pages = {
   interiors: string;
@@ -34,9 +35,10 @@ function ProjectCard({
   projectId,
   isLink,
 }: ProjectCardProps) {
+  const { isAuthenticated } = useUser();
   return (
     <div className="w-full relative">
-      {pages?.interiors && (
+      {pages?.interiors && isAuthenticated && (
         <Button
           variant={"destructive"}
           className="cursor-pointer absolute z-20"

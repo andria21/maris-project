@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { createExteriorPost } from "@/actions/createPost";
 import { deleteExteriorPost } from "@/actions/deletePost";
 import SkeletonUI from "@/components/skeleton";
+import { useUser } from "@/hooks/useUser";
 
 type InteriorPost = {
   _id: string;
@@ -27,6 +28,8 @@ export default function Exteriors() {
     `/api/exterior-posts`,
     fetcher
   );
+
+  const { isAuthenticated } = useUser();
 
   // const { pending } = useFormStatus();
 
@@ -72,52 +75,56 @@ export default function Exteriors() {
                 description={item.desc}
                 pages={{ interiors: "interiors", exteriors: "" }}
                 deleteHandler={() => handleDeleteAction(item._id)}
+                projectId={`/exteriors/${item._id}`}
+                isLink
               />
             ))}
           </div>
         </div>
       )}
-      <form
-        action={handleAction}
-        className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
+      {isAuthenticated && (
+        <form
+          action={handleAction}
+          className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
              mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+            <Input
+              name="title"
+              type="text"
+              placeholder="Title"
+              required
+              className="w-full"
+            />
+            <Input
+              name="desc"
+              type="text"
+              placeholder="Description"
+              required
+              className="w-full"
+            />
+          </div>
+
           <Input
-            name="title"
+            name="img"
             type="text"
-            placeholder="Title"
+            placeholder="Image"
             required
             className="w-full"
           />
-          <Input
-            name="desc"
-            type="text"
-            placeholder="Description"
-            required
-            className="w-full"
-          />
-        </div>
 
-        <Input
-          name="img"
-          type="text"
-          placeholder="Image"
-          required
-          className="w-full"
-        />
-
-        <div className="flex items-center gap-3">
-          <Button
-            variant="default"
-            type="submit"
-            className="cursor-pointer w-full md:w-auto"
-          >
-            Submit
-          </Button>
-          {isLoading && <Spinner />}
-        </div>
-      </form>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="default"
+              type="submit"
+              className="cursor-pointer w-full md:w-auto"
+            >
+              Submit
+            </Button>
+            {isLoading && <Spinner />}
+          </div>
+        </form>
+      )}
     </div>
   );
 }

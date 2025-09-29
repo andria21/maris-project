@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { createInteriorProjectPost } from "@/actions/createProjectPost";
 import { deleteInteriorProjectPost } from "@/actions/deleteProjectPost";
 import SkeletonUI from "@/components/skeleton";
+import { useUser } from "@/hooks/useUser";
 
 interface ProjectDetailsProps {
   params: Promise<{ projectId: string }>;
@@ -34,6 +35,8 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     `/api/interior-projects`,
     fetcher
   );
+
+  const { isAuthenticated } = useUser();
 
   // console.log(!isLoading && data);
   const projectName = data?.find(
@@ -62,6 +65,9 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     }
   }
 
+  // TODO
+  // ? EXTERIOR page needs some updates that INTERIOR has
+  // ! BLOG AND TERMS PAGE
 
   if (error) return <p>There&apos; been an error</p>;
 
@@ -92,44 +98,46 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
           </div>
         </div>
       )}
-      <form
-        action={handleAction}
-        className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
+      {isAuthenticated && (
+        <form
+          action={handleAction}
+          className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
                    mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+            <Input
+              name="title"
+              type="text"
+              placeholder="Title"
+              className="w-full"
+            />
+            <Input
+              name="desc"
+              type="text"
+              placeholder="Description"
+              className="w-full"
+            />
+          </div>
+
           <Input
-            name="title"
+            name="img"
             type="text"
-            placeholder="Title"
+            placeholder="Image"
+            required
             className="w-full"
           />
-          <Input
-            name="desc"
-            type="text"
-            placeholder="Description"
-            className="w-full"
-          />
-        </div>
 
-        <Input
-          name="img"
-          type="text"
-          placeholder="Image"
-          required
-          className="w-full"
-        />
-
-        <div className="flex items-center gap-3">
-          <Button
-            variant="default"
-            type="submit"
-            className="cursor-pointer w-full md:w-auto"
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="default"
+              type="submit"
+              className="cursor-pointer w-full md:w-auto"
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
