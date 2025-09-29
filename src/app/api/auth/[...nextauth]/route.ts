@@ -1,20 +1,17 @@
-// src/pages/api/auth/[...nextauth].ts  (or /app/api/auth/[...nextauth]/route.ts for App Router)
-import NextAuth, { AuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+// src/app/api/auth/[...nextauth]/route.ts
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connect from "@/utils/db";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
-// Define a TypeScript type for your user object returned by authorize
 interface AuthUser {
   id: string;
   email: string;
   name?: string;
 }
 
-// NextAuth options
-export const authOptions: AuthOptions = {
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -31,7 +28,6 @@ export const authOptions: AuthOptions = {
         await connect();
 
         const user = await User.findOne({ email: credentials.email });
-
         if (!user) throw new Error("User not found");
 
         const isPasswordCorrect = await bcrypt.compare(
@@ -41,7 +37,6 @@ export const authOptions: AuthOptions = {
 
         if (!isPasswordCorrect) throw new Error("Wrong Credentials!");
 
-        // Return a plain object with id/email/name
         return {
           id: user._id.toString(),
           email: user.email,
@@ -63,11 +58,7 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
-};
+});
 
-// For App Router export
-const handler = NextAuth(authOptions);
+// **App Router requires exporting GET & POST**
 export { handler as GET, handler as POST };
-
-// For Pages Router (if using /pages/api) use:
-// export default NextAuth(authOptions);
