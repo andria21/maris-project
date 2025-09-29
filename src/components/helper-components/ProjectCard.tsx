@@ -40,7 +40,7 @@ function ProjectCard({
     <div className="w-full relative">
       {pages?.interiors && isAuthenticated && (
         <Button
-          variant={"destructive"}
+          variant={"outline"}
           className="cursor-pointer absolute z-20"
           onClick={() => deleteHandler?.(id!)}
         >
