@@ -1,13 +1,14 @@
 "use client";
 import Hero from "@/components/hero";
 import Projects from "@/components/projects";
+import SkeletonUI from "@/components/skeleton";
 import { useUser } from "@/hooks/useUser";
 
 export default function Home() {
   const { isLoading } = useUser();
 
   if (isLoading) {
-    return <p className="text-center mt-20">Loading...</p>;
+    return <div className="pt-20"><SkeletonUI /></div>;
   }
 
   return (

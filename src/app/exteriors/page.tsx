@@ -58,7 +58,7 @@ export default function Exteriors() {
   if (error) return <p>There&apos been an error</p>;
 
   return (
-    <div className="h-screen w-full flex flex-col justify-between">
+    <div className=" w-full flex flex-col justify-between">
       <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
         EXTERIORS
       </h1>
@@ -86,7 +86,7 @@ export default function Exteriors() {
         <form
           action={handleAction}
           className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
-             mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md"
+             mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md mb-20"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
             <Input

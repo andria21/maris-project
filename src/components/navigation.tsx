@@ -86,7 +86,7 @@ export default function Navigation() {
           <Button
             variant="default"
             size="sm"
-            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[12px] cursor-pointer p-4 py-1.5 mr-2"
+            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] font-montserrat cursor-pointer p-4 py-1.5 mr-2 hover:bg-white hover:text-black antialiased"
           >
             Contact Us
           </Button>
