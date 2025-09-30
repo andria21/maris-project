@@ -12,6 +12,7 @@ import { createExteriorPost } from "@/actions/createPost";
 import { deleteExteriorPost } from "@/actions/deletePost";
 import SkeletonUI from "@/components/skeleton";
 import { useUser } from "@/hooks/useUser";
+import { AnimatePresence, motion } from "framer-motion";
 
 type InteriorPost = {
   _id: string;
@@ -58,6 +59,13 @@ export default function Exteriors() {
   if (error) return <p>There&apos been an error</p>;
 
   return (
+        <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+      >
     <div className=" w-full flex flex-col justify-between">
       <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
         EXTERIORS
@@ -126,5 +134,7 @@ export default function Exteriors() {
         </form>
       )}
     </div>
+    </motion.div>
+    </AnimatePresence>
   );
 }

@@ -11,6 +11,7 @@ import { createInteriorProjectPost } from "@/actions/createProjectPost";
 import { deleteInteriorProjectPost } from "@/actions/deleteProjectPost";
 import SkeletonUI from "@/components/skeleton";
 import { useUser } from "@/hooks/useUser";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ProjectDetailsProps {
   params: Promise<{ projectId: string }>;
@@ -72,6 +73,13 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
   if (error) return <p>There&apos; been an error</p>;
 
   return (
+        <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+      >
     <div className="w-full flex flex-col justify-between">
       <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
         {projectName}
@@ -139,6 +147,8 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
         </form>
       )}
     </div>
+    </motion.div>
+    </AnimatePresence>
   );
 };
 

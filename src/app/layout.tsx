@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/AuthProvider";
+import MotionWrapper from "@/components/MotionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,7 +48,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             <Navigation />
-            {children}
+            <MotionWrapper>{children}</MotionWrapper>
             <Footer />
           </AuthProvider>
           <Toaster richColors position="bottom-right" />

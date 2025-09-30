@@ -60,10 +60,10 @@ export default function Navigation() {
     >
       {/* Desktop Links */}
       <div className="hidden md:flex space-x-8 tracking-wide text-gray-300 text-[12px]">
-        <Link href="/interiors">Interiors</Link>
-        <Link href="/exteriors">Exteriors</Link>
-        <Link href="/blog">Blog</Link>
-        <Link href="/terms">Terms</Link>
+        <Link className="nav-link" href="/interiors">Interiors</Link>
+        <Link className="nav-link" href="/exteriors">Exteriors</Link>
+        <Link className="nav-link" href="/blog">Blog</Link>
+        <Link className="nav-link" href="/terms">Terms</Link>
       </div>
 
       {/* Logo */}

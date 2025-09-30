@@ -8,7 +8,11 @@ export default function Home() {
   const { isLoading } = useUser();
 
   if (isLoading) {
-    return <div className="pt-20"><SkeletonUI /></div>;
+    return (
+      <div className="pt-20">
+        <SkeletonUI />
+      </div>
+    );
   }
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Mail, Phone, Globe } from "lucide-react";
-import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { Button } from "./ui/button";
 
 export default function Footer() {
@@ -15,7 +15,7 @@ export default function Footer() {
             </h1>
           </span>
           <p className="pt-2 leading-tight text-[12px] text-[#898989]">
-            Feel free to reach out <br/>
+            Feel free to reach out <br />
             and schedule a meeting
           </p>
         </div>
@@ -29,19 +29,19 @@ export default function Footer() {
           <p className="text-[14px] pt-8 pb-4">Contact me:</p>
           <div className="flex gap-2">
             <Button
-            variant="default"
-            size="lg"
-            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] cursor-pointer p-4 py-1.5 px-6 hover:bg-white hover:text-black antialiased"
-          >
-            Telegram
-          </Button>
-          <Button
-            variant="default"
-            size="lg"
-            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] cursor-pointer p-4 py-1.5 px-6 hover:bg-white hover:text-black antialiased"
-          >
-            WhatsApp
-          </Button>
+              variant="default"
+              size="lg"
+              className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] cursor-pointer p-4 py-1.5 px-6 hover:bg-white hover:text-black antialiased"
+            >
+              Telegram
+            </Button>
+            <Button
+              variant="default"
+              size="lg"
+              className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] cursor-pointer p-4 py-1.5 px-6 hover:bg-white hover:text-black antialiased"
+            >
+              WhatsApp
+            </Button>
           </div>
         </div>
         <div>
@@ -53,8 +53,14 @@ export default function Footer() {
           </span>
           <p className="text-[14px] pt-8 pb-4">Socials</p>
           <div className="flex gap-2 justify-center sm:justify-start">
-            <FaFacebook className="w-7 h-7 cursor-pointer" />
-            <FaInstagram className="w-7 h-7 cursor-pointer" />
+            <FaFacebook
+              className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
+                   hover:scale-110 hover:rotate-6"
+            />
+            <FaInstagram
+              className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
+                   hover:scale-110 hover:rotate-6"
+            />
           </div>
         </div>
       </div>
