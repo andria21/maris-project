@@ -2,6 +2,7 @@ import React from "react";
 import { Mail, Phone, Globe } from "lucide-react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -53,14 +54,22 @@ export default function Footer() {
           </span>
           <p className="text-[14px] pt-8 pb-4">Socials</p>
           <div className="flex gap-2 justify-center sm:justify-start">
-            <FaFacebook
-              className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
+            <Link href={"https://facebook.com/share/16JjtTVb6f/?mibextid=wwXIfr"}>
+              <FaFacebook
+                className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
                    hover:scale-110 hover:rotate-6"
-            />
-            <FaInstagram
-              className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
+              />
+            </Link>
+            <Link
+              href={
+                "https://instagram.com/architecturevision__?igsh=MTdoMjIzYjIweXEwMQ=="
+              }
+            >
+              <FaInstagram
+                className="w-7 h-7 cursor-pointer transform transition-transform duration-300 
                    hover:scale-110 hover:rotate-6"
-            />
+              />
+            </Link>
           </div>
         </div>
       </div>
