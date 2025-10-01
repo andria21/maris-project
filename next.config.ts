@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
       },
     ], // add any domains you want
   },
+  experimental: {
+    serverActions: {
+      // increase the limit (example: 10MB)
+      bodySizeLimit: "10mb",
+    },
+  },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

@@ -6,8 +6,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer>
-      <div className="grid grid-cols-1 text-center sm:text-left sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-6 pb-30 font-montserrat">
+    <footer id="footer">
+      <div className="grid grid-cols-1 text-center sm:text-left sm:grid-cols-2 md:grid-cols-3 justify-items-center sm:gap-6 gap-10 sm:pb-30 pb-20 font-montserrat">
         <div>
           <span className="flex gap-2">
             <Globe className="w-6 h-6" />
@@ -27,7 +27,7 @@ export default function Footer() {
               +995 (555) 55-55-55
             </h1>
           </span>
-          <p className="text-[14px] pt-8 pb-4">Contact me:</p>
+          <p className="text-[14px] pt-2 sm:pt-8 pb-4">Contact me:</p>
           <div className="flex gap-2">
             <Button
               variant="default"
@@ -52,9 +52,11 @@ export default function Footer() {
               test@gmail.com
             </h1>
           </span>
-          <p className="text-[14px] pt-8 pb-4">Socials</p>
+          <p className="text-[14px] pt-2 sm:pt-8 pb-4">Socials</p>
           <div className="flex gap-2 justify-center sm:justify-start">
-            <Link href={"https://facebook.com/share/16JjtTVb6f/?mibextid=wwXIfr"}>
+            <Link
+              href={"https://facebook.com/share/16JjtTVb6f/?mibextid=wwXIfr"}
+            >
               <FaFacebook
                 className="w-7 h-7 cursor-pointer  transform transition-transform duration-300 
                    hover:scale-110 hover:rotate-6"

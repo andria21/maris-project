@@ -14,17 +14,22 @@ import {
 } from "./ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false); // mobile menu toggle
 
-
   const { user, isAuthenticated } = useUser();
 
   const handleLogout = async () => {
-    await signOut({ redirect: false }); // don’t auto redirect
-    // router.push("/"); // manually navigate
+    await signOut({ redirect: false });
+    toast.success(`Successfully logged out`);
+  };
+
+  const scrollToFooter = () => {
+    const footer = document.getElementById("footer");
+    footer?.scrollIntoView({ behavior: "smooth" });
   };
 
   function CustomDp() {
@@ -35,10 +40,7 @@ export default function Navigation() {
             <Button variant="outline">{user?.name || user?.email}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={handleLogout}
-              className="cursor-pointer"
-            >
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -47,7 +49,7 @@ export default function Navigation() {
   }
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -60,10 +62,18 @@ export default function Navigation() {
     >
       {/* Desktop Links */}
       <div className="hidden md:flex space-x-8 tracking-wide text-gray-300 text-[12px]">
-        <Link className="nav-link" href="/interiors">Interiors</Link>
-        <Link className="nav-link" href="/exteriors">Exteriors</Link>
-        <Link className="nav-link" href="/blog">Blog</Link>
-        <Link className="nav-link" href="/terms">Terms</Link>
+        <Link className="nav-link" href="/interiors">
+          Interiors
+        </Link>
+        <Link className="nav-link" href="/exteriors">
+          Exteriors
+        </Link>
+        <Link className="nav-link" href="/blog">
+          Blog
+        </Link>
+        <Link className="nav-link" href="/terms">
+          Terms
+        </Link>
       </div>
 
       {/* Logo */}
@@ -87,6 +97,7 @@ export default function Navigation() {
             variant="default"
             size="sm"
             className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] font-montserrat cursor-pointer p-4 py-1.5 mr-2 hover:bg-white hover:text-black antialiased"
+            onClick={scrollToFooter}
           >
             Contact Us
           </Button>
@@ -138,6 +149,10 @@ export default function Navigation() {
             variant="default"
             size="lg"
             className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide"
+            onClick={() => {
+              scrollToFooter();
+              setOpen(false);
+            }}
           >
             Contact
           </Button>

@@ -3,7 +3,6 @@
 import ProjectCard from "@/components/helper-components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
@@ -66,88 +65,92 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     }
   }
 
-  // TODO
-  // ? EXTERIOR page needs some updates that INTERIOR has
-  // ! BLOG AND TERMS PAGE
-
   if (error) return <p>There&apos; been an error</p>;
 
   return (
-        <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 2, ease: "easeInOut" }}
       >
-    <div className="w-full flex flex-col justify-between">
-      <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
-        {projectName}
-      </h1>
-      {isLoading ? (
-        <SkeletonUI />
-      ) : (
-        <div className="flex flex-col items-center justify-center w-full">
-          <div className="grid grid-cols-1 md:gap-y-32 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
-            {data
-              ?.filter((item: InteriorProject) => item.projectId === projectId)
-              .map((item: InteriorProject) => (
-                <ProjectCard
-                  key={item._id}
-                  image={item.img}
-                  title={item.title ?? ""}
-                  description={item.desc ?? ""}
-                  pages={{ interiors: "interiors", exteriors: "" }}
-                  deleteHandler={() => handleDeleteAction(item._id)}
-                  projectId={`/interiors/${item._id}`}
-                  isLink={false}
+        <div className="w-full flex flex-col justify-between pb-20">
+          <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
+            {projectName}
+          </h1>
+          {isAuthenticated && (
+            <div className="p-4 sm:p-0">
+              <form
+                action={handleAction}
+                className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
+                   mx-auto p-6 md:p-8 gap-3 bg-[#171717] rounded-2xl shadow-md my-20"
+              >
+                <h1 className="text-center pb-4 text-lg font-semibold text-white">
+                  Add a new post
+                </h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+                  <Input
+                    name="title"
+                    type="text"
+                    placeholder="Title"
+                    className="w-full"
+                  />
+                  <Input
+                    name="desc"
+                    type="text"
+                    placeholder="Description"
+                    className="w-full"
+                  />
+                </div>
+
+                <Input
+                  name="img"
+                  type="text"
+                  placeholder="Image"
+                  required
+                  className="w-full"
                 />
-              ))}
-          </div>
+
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="default"
+                    type="submit"
+                    className="cursor-pointer w-full md:w-auto"
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {isLoading ? (
+            <SkeletonUI />
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full">
+              <div className="grid grid-cols-1 md:gap-y-32 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
+                {data
+                  ?.filter(
+                    (item: InteriorProject) => item.projectId === projectId
+                  )
+                  .map((item: InteriorProject) => (
+                    <ProjectCard
+                      key={item._id}
+                      image={item.img}
+                      title={item.title ?? ""}
+                      description={item.desc ?? ""}
+                      pages={{ interiors: "interiors", exteriors: "" }}
+                      deleteHandler={() => handleDeleteAction(item._id)}
+                      projectId={`/interiors/${item._id}`}
+                      isLink={false}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
-      {isAuthenticated && (
-        <form
-          action={handleAction}
-          className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
-                   mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-gray-800 rounded-2xl shadow-md mb-20"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-            <Input
-              name="title"
-              type="text"
-              placeholder="Title"
-              className="w-full"
-            />
-            <Input
-              name="desc"
-              type="text"
-              placeholder="Description"
-              className="w-full"
-            />
-          </div>
-
-          <Input
-            name="img"
-            type="text"
-            placeholder="Image"
-            required
-            className="w-full"
-          />
-
-          <div className="flex items-center gap-3">
-            <Button
-              variant="default"
-              type="submit"
-              className="cursor-pointer w-full md:w-auto"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
-      )}
-    </div>
-    </motion.div>
+      </motion.div>
     </AnimatePresence>
   );
 };

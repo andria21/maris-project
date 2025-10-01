@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export default function LoginPage() {
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,19 +24,15 @@ export default function LoginPage() {
     });
 
     if (res?.error) {
-      setError(res.error);
+      // console.log(res.error);
+      toast.error(res.error);
     } else {
-      router.push("/");
+      router.push("/?login=success");
     }
   }
 
-  console.log(
-    error
-  );
-  
-
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center sm:p-0 p-4">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm space-y-4 rounded-2xl bg-[#171717] p-6 shadow-md"
@@ -52,8 +48,6 @@ export default function LoginPage() {
           <Label>Password</Label>
           <Input type="password" name="password" required />
         </div>
-
-        {error && <p className="text-sm text-red-500">{error}</p>}
 
         <Button type="submit" className="w-full cursor-pointer">
           Login
