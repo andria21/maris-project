@@ -5,7 +5,7 @@ function Blog() {
   return (
     <div className="w-full flex flex-col">
       <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat md:text-left text-center">
-        About Me
+        ABOUT ME
       </h1>
       <section className="flex flex-col justify-between md:gap-16 gap-8">
         <div className="grid md:grid-cols-2 grid-cols-1 place-content-center items-center justify-center text-center pt-20 md:gap-0 gap-8">
