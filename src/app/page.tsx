@@ -1,4 +1,5 @@
 "use client";
+
 import Hero from "@/components/hero";
 import MotionWrapper from "@/components/MotionProvider";
 import Projects from "@/components/projects";
@@ -7,8 +8,9 @@ import { useUser } from "@/hooks/useUser";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { Suspense } from "react";
 
-export default function Home() {
+function HomeContent() {
   const { isLoading } = useUser();
   const searchParams = useSearchParams();
 
@@ -33,5 +35,19 @@ export default function Home() {
         <Projects />
       </main>
     </MotionWrapper>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="pt-20">
+          <SkeletonUI />
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }
