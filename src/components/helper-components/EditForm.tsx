@@ -47,9 +47,9 @@ export default function EditForm({
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fadeIn z-50" />
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Create Post</DialogTitle>
+              <DialogTitle>Edit Post</DialogTitle>
               <DialogDescription>
-                Fill out the form to add a new post.
+                Fill out the form to edit your post.
               </DialogDescription>
             </DialogHeader>
 
