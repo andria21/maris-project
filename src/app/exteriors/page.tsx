@@ -1,9 +1,6 @@
 "use client";
 
 import ProjectCard from "@/components/helper-components/ProjectCard";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
@@ -11,9 +8,9 @@ import { toast } from "sonner";
 import { createExteriorPost } from "@/actions/createPost";
 import { deleteExteriorPost } from "@/actions/deletePost";
 import SkeletonUI from "@/components/skeleton";
-import { useUser } from "@/hooks/useUser";
 import { AnimatePresence, motion } from "framer-motion";
-import PostForm from "@/components/helper-components/PostForm";
+import PostFormButton from "@/components/helper-components/PostFormButton";
+import { editExteriorPost } from "@/actions/editPost";
 
 type InteriorPost = {
   _id: string;
@@ -30,8 +27,6 @@ export default function Exteriors() {
     `/api/exterior-posts`,
     fetcher
   );
-
-  const { isAuthenticated } = useUser();
 
   // const { pending } = useFormStatus();
 
@@ -57,6 +52,17 @@ export default function Exteriors() {
     }
   }
 
+    async function handleEditeAction(id: string, formData: FormData) {
+      try {
+        await editExteriorPost(id, formData);
+        mutate();
+        toast.success("Post updated successfully");
+      } catch (err) {
+        console.log(err);
+        toast.error("Something went wrong");
+      }
+    }
+
   if (error) return <p>There&apos been an error</p>;
 
   return (
@@ -71,10 +77,6 @@ export default function Exteriors() {
           <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
             EXTERIORS
           </h1>
-          <PostForm
-            isAuthenticated={isAuthenticated}
-            handleAction={handleAction}
-          />
 
           {isLoading ? (
             <SkeletonUI />
@@ -91,12 +93,17 @@ export default function Exteriors() {
                     deleteHandler={() => handleDeleteAction(item._id)}
                     projectId={`/exteriors/${item._id}`}
                     isLink
+                    id={item._id}
+                    editHandler={handleEditeAction}
                   />
                 ))}
               </div>
             </div>
           )}
         </div>
+        <PostFormButton
+          handleAction={handleAction}
+        />
       </motion.div>
     </AnimatePresence>
   );

@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
+import EditForm from "./EditForm";
 
 type Pages = {
   interiors: string;
@@ -19,7 +20,8 @@ type ProjectCardProps = {
   description: string;
   pages?: Pages;
   deleteHandler?: (id: string) => void;
-  id?: string;
+  editHandler?: (id: string, formData: FormData) => void | Promise<void>;
+  id: string;
   projectId?: string | undefined;
   isLink?: boolean;
 };
@@ -34,6 +36,7 @@ function ProjectCard({
   id,
   projectId,
   isLink,
+  editHandler,
 }: ProjectCardProps) {
   const { isAuthenticated } = useUser();
   return (
@@ -41,11 +44,19 @@ function ProjectCard({
       {pages?.interiors && isAuthenticated && (
         <Button
           variant={"outline"}
-          className="cursor-pointer absolute z-20"
+          className="cursor-pointer absolute z-20 left-2 top-2 hover:bg-input/90 dark:hover:bg-foreground/50"
           onClick={() => deleteHandler?.(id!)}
         >
           <X className="h-6 w-6" />
         </Button>
+      )}
+
+      {pages?.interiors && isAuthenticated && (
+        <EditForm
+          isAuthenticated={isAuthenticated}
+          id={id}
+          handleEditAction={editHandler}
+        />
       )}
 
       {isLink ? (

@@ -1,16 +1,14 @@
 import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useUser } from "@/hooks/useUser";
 
 type PostFormProps = {
-  isAuthenticated: boolean;
   handleAction: (formData: FormData) => void | Promise<void>;
 };
 
-export default function PostForm({
-  isAuthenticated,
-  handleAction,
-}: PostFormProps) {
+export default function PostForm({ handleAction }: PostFormProps) {
+  const { isAuthenticated } = useUser();
   return (
     isAuthenticated && (
       <div className="p-4 sm:p-0">

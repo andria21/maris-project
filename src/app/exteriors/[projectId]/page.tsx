@@ -1,16 +1,14 @@
 "use client";
 
 import ProjectCard from "@/components/helper-components/ProjectCard";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
 import { createExteriorProjectPost } from "@/actions/createProjectPost";
 import SkeletonUI from "@/components/skeleton";
-import { useUser } from "@/hooks/useUser";
 import { deleteExteriorProjectPost } from "@/actions/deleteProjectPost";
-import PostForm from "@/components/helper-components/PostForm";
+import PostFormButton from "@/components/helper-components/PostFormButton";
+import { editExteriorProjectPost } from "@/actions/editProjectPost";
 
 interface ProjectDetailsProps {
   params: Promise<{ projectId: string }>;
@@ -35,8 +33,6 @@ const ExteriorProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     `/api/exterior-projects`,
     fetcher
   );
-
-  const { isAuthenticated } = useUser();
 
   // console.log(!isLoading && data);
   const projectName = data?.find(
@@ -65,6 +61,17 @@ const ExteriorProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
     }
   }
 
+  async function handleEditeAction(id: string, formData: FormData) {
+    try {
+      await editExteriorProjectPost(id, formData);
+      mutate();
+      toast.success("Post updated successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong");
+    }
+  }
+
   if (error) return <p>There&apos; been an error</p>;
 
   return (
@@ -72,7 +79,6 @@ const ExteriorProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
       <h1 className="pt-40 pl-6 text-5xl md:text-7xl font-bold font-montserrat">
         {projectName}
       </h1>
-      <PostForm isAuthenticated={isAuthenticated} handleAction={handleAction} />
 
       {isLoading ? (
         <SkeletonUI />
@@ -91,11 +97,14 @@ const ExteriorProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
                   deleteHandler={() => handleDeleteAction(item._id)}
                   projectId={`/exteriors/${item._id}`}
                   isLink={false}
+                  id={item._id}
+                  editHandler={handleEditeAction}
                 />
               ))}
           </div>
         </div>
       )}
+      <PostFormButton handleAction={handleAction} />
     </div>
   );
 };

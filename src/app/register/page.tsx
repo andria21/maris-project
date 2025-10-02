@@ -87,6 +87,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
-// -------------------- Server Action --------------------
-// Put this at the bottom of the same file (or export in actions.ts if you want reuse)
