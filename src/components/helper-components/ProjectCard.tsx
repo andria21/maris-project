@@ -21,7 +21,7 @@ type ProjectCardProps = {
   pages?: Pages;
   deleteHandler?: (id: string) => void;
   editHandler?: (id: string, formData: FormData) => void | Promise<void>;
-  id: string;
+  id?: string;
   projectId?: string | undefined;
   isLink?: boolean;
 };
@@ -54,7 +54,7 @@ function ProjectCard({
       {pages?.interiors && isAuthenticated && (
         <EditForm
           isAuthenticated={isAuthenticated}
-          id={id}
+          id={id!}
           handleEditAction={editHandler}
         />
       )}
