@@ -10,8 +10,6 @@ import SkeletonUI from "@/components/skeleton";
 import PostFormButton from "@/components/helper-components/PostFormButton";
 import { editInteriorPost } from "@/actions/editPost";
 import MotionWrapper from "@/components/MotionProvider";
-import fs from "fs";
-import path from "path";
 
 type InteriorPost = {
   _id: string;
@@ -37,10 +35,6 @@ export default function Interiors() {
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");
-      fs.appendFileSync(
-  path.join(process.cwd(), "error.log"),
-  `${new Date().toISOString()} - ${err}\n`
-);
     }
   }
 
