@@ -8,7 +8,7 @@ import { Readable } from "stream";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
-export default async function uploadToDrive(file: File | Blob) {
+export default async function uploadToDrive(file: File) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.accessToken)
     throw new Error("Not authenticated with Google");
@@ -21,22 +21,16 @@ export default async function uploadToDrive(file: File | Blob) {
 
   const drive = google.drive({ version: "v3", auth: oauth2Client });
 
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  // Fallbacks if the object is a Blob
-  const fileName = file instanceof File ? file.name : "upload.jpg";
-  const mimeType = file instanceof File ? file.type : "image/jpeg";
-
+  const fileBuffer = await file.arrayBuffer();
   const createResponse = await drive.files.create({
     requestBody: {
-      name: fileName,
-      mimeType,
+      name: file.name,
+      mimeType: file.type,
       parents: ["1R-9fNFDZO6bT1yPeADX7-iUZmvYk-4qQ"],
     },
     media: {
-      mimeType,
-      body: Readable.from(buffer),
+      mimeType: file.type,
+      body: Readable.from(Buffer.from(fileBuffer)),
     },
     fields: "id,name,webViewLink",
   });
@@ -47,10 +41,10 @@ export default async function uploadToDrive(file: File | Blob) {
 async function createPostUtil(formData: FormData, page: boolean) {
   await connect();
 
-  const file = formData.get("img");
+  const file = formData.get("img") as File;
   let imgUrl = "";
 
-  if (file && typeof file !== "string") {
+  if (file && file instanceof File) {
     imgUrl = await uploadToDrive(file);
   }
 
