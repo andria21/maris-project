@@ -33,14 +33,8 @@ export default function Interiors() {
       mutate();
       toast.success("Post created successfully");
     } catch (err) {
-      // console.log(err);
-      // toast.error("Something went wrong");
-          const message = err instanceof Error ? err.message : String(err);
-
-    // Optional: send it as toast or return it to client
-    toast.error(`Error: ${message}`);
-    console.error(err);
-      
+      console.log(err);
+      toast.error("Something went wrong");
     }
   }
 
