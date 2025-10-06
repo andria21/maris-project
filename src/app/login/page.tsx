@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   // const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { isAuthenticated } = useUser();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,6 +33,12 @@ export default function LoginPage() {
       router.push("/?login=success");
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/?login=success");
+    }
+  }, [isAuthenticated, router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center sm:p-0 p-4">
