@@ -53,7 +53,6 @@ function ProjectCard({
 
       {pages?.interiors && isAuthenticated && (
         <EditForm
-          isAuthenticated={isAuthenticated}
           id={id!}
           handleEditAction={editHandler}
         />
