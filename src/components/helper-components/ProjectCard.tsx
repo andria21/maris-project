@@ -52,15 +52,12 @@ function ProjectCard({
       )}
 
       {pages?.interiors && isAuthenticated && (
-        <EditForm
-          id={id!}
-          handleEditAction={editHandler}
-        />
+        <EditForm id={id!} handleEditAction={editHandler} />
       )}
 
       {isLink ? (
         <Link href={projectId ?? ""}>
-          <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
+          <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] md:aspect-[16/9] group">
             <Image
               src={image}
               alt="Image 1"
@@ -70,7 +67,7 @@ function ProjectCard({
           </div>
         </Link>
       ) : (
-        <div className="relative w-full h-80 sm:h-90 md:h-96 lg:h-[425px] group">
+        <div className="relative w-full h-80 sm:aspect-[4/3] md:aspect-[16/9] group">
           <Image
             src={image}
             alt="Image 1"
