@@ -54,7 +54,7 @@ export default function LoginPage() {
           Login
         </Button>
         <Button
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google", { callbackUrl: "/?login=success" })}
           type="button"
           className="w-full cursor-pointer bg-blue-500"
         >
