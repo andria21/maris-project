@@ -3,6 +3,7 @@
 import connect from "@/utils/db";
 import InteriorProjects from "@/models/InteriorProjects";
 import ExteriorProjects from "@/models/ExteriorProjects";
+import uploadToDrive from "./createPost";
 
 export const createExteriorProjectPost = async (
   formData: FormData,
@@ -23,14 +24,21 @@ async function createPostUtil(
   page: boolean,
   projectId: string
 ) {
+  await connect();
+
+  const file = formData.get("img") as File;
+  let imgUrl = "";
+
+  if (file && file instanceof File) {
+    imgUrl = await uploadToDrive(file);
+  }
+
   const rawFormData = {
     projectId,
     title: formData.get("title"),
     desc: formData.get("desc"),
-    img: formData.get("img"),
+    img: imgUrl,
   };
-
-  await connect();
 
   const pagePost = page ? InteriorProjects : ExteriorProjects;
 

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function LoginPage() {
   // const [error, setError] = useState<string | null>(null);
@@ -51,6 +52,13 @@ export default function LoginPage() {
 
         <Button type="submit" className="w-full cursor-pointer">
           Login
+        </Button>
+        <Button
+          onClick={() => signIn("google")}
+          type="button"
+          className="w-full cursor-pointer bg-blue-500"
+        >
+          Sign in with Google
         </Button>
       </form>
     </div>

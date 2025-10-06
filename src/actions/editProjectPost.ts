@@ -3,6 +3,7 @@
 import connect from "@/utils/db";
 import ExteriorProjectPost from "@/models/ExteriorProjects";
 import InteriorProjectPost from "@/models/InteriorProjects";
+import uploadToDrive from "./createPost";
 
 export const editExteriorProjectPost = async (
   postId: string,
@@ -24,11 +25,7 @@ interface PostUpdateData {
   img?: string | null;
 }
 
-async function editPostUtil(
-  postId: string,
-  formData: FormData,
-  page: boolean
-) {
+async function editPostUtil(postId: string, formData: FormData, page: boolean) {
   await connect();
 
   const pagePost = page ? InteriorProjectPost : ExteriorProjectPost;
@@ -36,9 +33,16 @@ async function editPostUtil(
   // Build the update object with proper types
   const updateData: PostUpdateData = {};
 
+  const file = formData.get("img") as File;
+  let imgUrl = "";
+
+  if (file && file instanceof File && file.size > 0) {
+    imgUrl = await uploadToDrive(file);
+  }
+
   const title = formData.get("title")?.toString().trim();
   const desc = formData.get("desc")?.toString().trim();
-  const img = formData.get("img")?.toString().trim();
+  const img = imgUrl;
 
   if (title) updateData.title = title;
   if (desc) updateData.desc = desc;

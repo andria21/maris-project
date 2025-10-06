@@ -1,17 +1,26 @@
-// src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import connect from "@/utils/db";
-import User from "@/models/User";
+import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
 
-interface AuthUser {
+interface AuthUser extends User {
   id: string;
-  email: string;
   name?: string;
+  email: string;
 }
 
-const handler = NextAuth({
+interface MyToken {
+  id?: string;
+  accessToken?: string;
+  refreshToken?: string;
+  iat?: number;
+  exp?: number;
+  [key: string]: unknown;
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -21,21 +30,18 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials.password)
           throw new Error("Missing email or password");
-        }
 
         await connect();
-
-        const user = await User.findOne({ email: credentials.email });
+        const user = await UserModel.findOne({ email: credentials.email });
         if (!user) throw new Error("User not found");
 
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password,
           user.password
         );
-
-        if (!isPasswordCorrect) throw new Error("Wrong Credentials!");
+        if (!isPasswordCorrect) throw new Error("Wrong credentials!");
 
         return {
           id: user._id.toString(),
@@ -44,21 +50,41 @@ const handler = NextAuth({
         } as AuthUser;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID2!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET2!,
+      authorization: {
+        params: {
+          scope:
+            "openid email profile https://www.googleapis.com/auth/drive.file",
+          access_type: "offline",
+          prompt: "consent select_account",
+        },
+      },
+    }),
   ],
-  pages: {
-    error: "/",
-  },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.id = (user as AuthUser).id;
-      return token;
+    async jwt({ token, user, account }) {
+      if (user) token.id = user.id;
+      if (account) {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+      }
+      return token; // now TS knows token.id exists
     },
+
     async session({ session, token }) {
-      if (session.user) session.user.id = token.id as string;
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.accessToken = token.accessToken;
+        session.user.refreshToken = token.refreshToken;
+      }
       return session;
     },
   },
-});
 
-// **App Router requires exporting GET & POST**
+  pages: { error: "/" },
+};
+
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
