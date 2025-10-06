@@ -7,7 +7,7 @@ import { google } from "googleapis";
 import { Readable } from "stream";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 export default async function uploadToDrive(file: File) {
   const session = await getServerSession(authOptions);
