@@ -125,11 +125,11 @@ export default function Navigation() {
             Interiors
           </Link>
           <Link
-            href="/exteriors"
+            href="/architecture"
             onClick={() => setOpen(false)}
             className="text-white text-lg"
           >
-            Exteriors
+            Architecture
           </Link>
           <Link
             href="/blog"
