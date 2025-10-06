@@ -8,7 +8,7 @@ import { Readable } from "stream";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
-async function uploadToDrive(file: File | Blob) {
+export async function uploadToDrive(file: File | Blob) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.accessToken)
     throw new Error("Not authenticated with Google");
