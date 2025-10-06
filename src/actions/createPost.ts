@@ -5,11 +5,10 @@ import ExteriorPost from "@/models/ExteriorPosts";
 import InteriorPost from "@/models/InteriorPost";
 import { google } from "googleapis";
 import { Readable } from "stream";
-import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
-export default async function uploadToDrive(file: File) {
+async function uploadToDrive(file: File | Blob) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.accessToken)
     throw new Error("Not authenticated with Google");
@@ -22,16 +21,22 @@ export default async function uploadToDrive(file: File) {
 
   const drive = google.drive({ version: "v3", auth: oauth2Client });
 
-  const fileBuffer = await file.arrayBuffer();
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  // Fallbacks if the object is a Blob
+  const fileName = file instanceof File ? file.name : "upload.jpg";
+  const mimeType = file instanceof File ? file.type : "image/jpeg";
+
   const createResponse = await drive.files.create({
     requestBody: {
-      name: file.name,
-      mimeType: file.type,
+      name: fileName,
+      mimeType,
       parents: ["1R-9fNFDZO6bT1yPeADX7-iUZmvYk-4qQ"],
     },
     media: {
-      mimeType: file.type,
-      body: Readable.from(Buffer.from(fileBuffer)),
+      mimeType,
+      body: Readable.from(buffer),
     },
     fields: "id,name,webViewLink",
   });
@@ -42,10 +47,10 @@ export default async function uploadToDrive(file: File) {
 async function createPostUtil(formData: FormData, page: boolean) {
   await connect();
 
-  const file = formData.get("img") as File;
+  const file = formData.get("img");
   let imgUrl = "";
 
-  if (file && file instanceof File) {
+  if (file && typeof file !== "string") {
     imgUrl = await uploadToDrive(file);
   }
 
