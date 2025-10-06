@@ -77,7 +77,12 @@ export default function EditForm({ handleEditAction, id }: EditFormProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <form className="grid gap-4" onSubmit={handleSubmit}>
+          <form
+            method="post"
+            encType="multipart/form-data"
+            className="grid gap-4"
+            onSubmit={handleSubmit}
+          >
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
               <Input id="title" name="title" placeholder="Post title" />

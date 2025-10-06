@@ -14,10 +14,19 @@ export default function UploadPage() {
         const uploadedFile = await actionDriveHelper(file);
         setUploadedLink(uploadedFile.webViewLink || null);
       }}
+      method="post"
+      encType="multipart/form-data"
     >
       <input type="file" name="file" />
       <button type="submit">Upload</button>
-      {uploadedLink && <p>Uploaded: <a href={uploadedLink} target="_blank">{uploadedLink}</a></p>}
+      {uploadedLink && (
+        <p>
+          Uploaded:{" "}
+          <a href={uploadedLink} target="_blank">
+            {uploadedLink}
+          </a>
+        </p>
+      )}
     </form>
   );
 }

@@ -13,6 +13,8 @@ export default function PostForm({ handleAction }: PostFormProps) {
     isAuthenticated && (
       <div className="p-4 sm:p-0">
         <form
+          method="post"
+          encType="multipart/form-data"
           action={handleAction}
           className="flex flex-col w-full max-w-md sm:max-w-lg md:max-w-2xl 
              mx-auto p-4 sm:p-6 md:p-8 gap-3 bg-[#171717] rounded-2xl shadow-md my-20"
