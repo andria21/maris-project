@@ -74,8 +74,8 @@ export default function Exteriors() {
         transition={{ duration: 2, ease: "easeInOut" }}
       >
         <div className=" w-full flex flex-col justify-between">
-          <h1 className="pt-40 flex justify-center text-5xl md:text-7xl font-bold font-montserrat">
-            EXTERIORS
+          <h1 className="pt-40 flex justify-center text-4xl sm:text-5xl md:text-7xl font-bold font-montserrat">
+            ARCHITECTURE
           </h1>
 
           {isLoading ? (
@@ -91,7 +91,7 @@ export default function Exteriors() {
                     description={item.desc}
                     pages={{ interiors: "interiors", exteriors: "" }}
                     deleteHandler={() => handleDeleteAction(item._id)}
-                    projectId={`/exteriors/${item._id}`}
+                    projectId={`/architecture/${item._id}`}
                     isLink
                     id={item._id}
                     editHandler={handleEditeAction}

@@ -103,7 +103,7 @@ const ExteriorProjectDetails: React.FC<ProjectDetailsProps> = ({ params }) => {
                 description={item.desc ?? ""}
                 pages={{ interiors: "interiors", exteriors: "" }}
                 deleteHandler={() => handleDeleteAction(item._id)}
-                projectId={`/exteriors/${item._id}`}
+                projectId={`/architecture/${item._id}`}
                 isLink={false}
                 id={item._id}
                 editHandler={handleEditeAction}

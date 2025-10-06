@@ -65,8 +65,8 @@ export default function Navigation() {
         <Link className="nav-link" href="/interiors">
           Interiors
         </Link>
-        <Link className="nav-link" href="/exteriors">
-          Exteriors
+        <Link className="nav-link" href="/architecture">
+          Architecture
         </Link>
         <Link className="nav-link" href="/blog">
           Blog
