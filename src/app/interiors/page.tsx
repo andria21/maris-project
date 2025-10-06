@@ -34,7 +34,7 @@ export default function Interiors() {
       toast.success("Post created successfully");
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong" + err);
     }
   }
 
