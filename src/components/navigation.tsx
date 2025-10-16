@@ -56,12 +56,12 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 p-2 px-8 flex items-center justify-between transition-all duration-500 flex-row-reverse md:flex-row ${
+      className={`fixed top-0 left-0 w-full z-50 p-2 px-8 flex items-center justify-between transition-all duration-500 flex-row-reverse md:flex-row font-montserrat ${
         scrolled ? "bg-black/80 backdrop-blur-md" : "bg-black"
       }`}
     >
       {/* Desktop Links */}
-      <div className="hidden md:flex space-x-8 tracking-wide text-gray-300 text-[12px]">
+      <div className="hidden md:flex space-x-8 tracking-wide text-[#cdcdcd] text-[10px] font-medium">
         <Link className="nav-link" href="/interiors">
           Interiors
         </Link>
@@ -116,7 +116,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden fixed top-11 left-0 w-full bg-black/90 backdrop-blur-md flex flex-col items-center space-y-4 py-4 z-40">
+        <div className="md:hidden fixed top-11 left-0 w-full bg-black/90 backdrop-blur-md flex flex-col items-center space-y-4 py-4 z-40 font-montserrat">
           <Link
             href="/interiors"
             onClick={() => setOpen(false)}
