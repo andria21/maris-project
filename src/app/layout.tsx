@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat, Tinos } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -13,10 +13,25 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+export const montserrat = Montserrat({
   subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-montserrat",
+});
+
+export const bbh = ({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-montserrat",
+});
+
+const tinos = Tinos({
+  subsets: ["latin"],
+  display: "swap",
   weight: ["400", "700"],
+  variable: "--font-tinos",
 });
 
 const geistMono = Geist_Mono({
@@ -37,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${tinos.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <ThemeProvider

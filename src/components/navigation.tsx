@@ -56,7 +56,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 p-2.5 px-8 flex items-center justify-between transition-all duration-500 flex-row-reverse md:flex-row ${
+      className={`fixed top-0 left-0 w-full z-50 p-2 px-8 flex items-center justify-between transition-all duration-500 flex-row-reverse md:flex-row ${
         scrolled ? "bg-black/80 backdrop-blur-md" : "bg-black"
       }`}
     >
@@ -96,7 +96,7 @@ export default function Navigation() {
           <Button
             variant="default"
             size="sm"
-            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] font-montserrat cursor-pointer p-4 py-1.5 mr-2 hover:bg-white hover:text-black antialiased"
+            className="bg-blue-500 rounded-3xl text-white font-medium tracking-wide text-[10px] font-montserrat cursor-pointer p-4 py-1.5 mr-2 hover:bg-white hover:text-black antialiased leading-1"
             onClick={scrollToFooter}
           >
             Contact Us

@@ -79,13 +79,13 @@ function ProjectCard({
 
       <h1
         className={cn(
-          "mt-6 md:pl-12 pl-6 font-medium text-2xl ",
-          pages?.interiors && "md:text-4xl text-2xl font-montserrat font-[600]"
+          "mt-6 md:pl-12 pl-6 font-semibold text-xl font-montserrat",
+          pages?.interiors && ""
         )}
       >
         {title}
       </h1>
-      <p className="text-gray-400 mt-1 md:pl-12 pl-6 text-md font-light font-montserrat">
+      <p className="text-gray-400 mt-1 md:pl-12 pl-6 text-xs font-light font-montserrat">
         {description}
       </p>
     </div>

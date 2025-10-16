@@ -122,8 +122,17 @@
 }
 
 .font-montserrat {
-  font-family: var(--font-montserrat, "Montserrat", ui-sans-serif, system-ui,
-    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+  font-family: var(
+    --font-montserrat,
+    "Montserrat",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial
+  );
 }
 
 .nav-link {

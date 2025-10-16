@@ -82,7 +82,7 @@ export default function Exteriors() {
             <SkeletonUI />
           ) : (
             <div className="flex flex-col items-center justify-center w-full">
-              <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-52 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
+              <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-30 sm:gap-y-20 gap-y-14 w-full pt-10 pb-20">
                 {data?.map((item: InteriorPost) => (
                   <ProjectCard
                     key={item._id}
